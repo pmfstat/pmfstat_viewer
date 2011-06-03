@@ -36,30 +36,26 @@ class VersionGraph extends ezcGraphPieChart
 
     public function render($w, $h, $f = null)
     {
-        try {
-//            $this->renderer = new ezcGraphRenderer3d(); 
-            $this->renderer->options->moveOut = .2;
+//        $this->renderer = new ezcGraphRenderer3d(); 
+        $this->renderer->options->moveOut = .2;
 
-            $this->renderer->options->pieChartOffset = 63;
+        $this->renderer->options->pieChartOffset = 63;
 
-            $this->renderer->options->pieChartGleam = .3;
-            $this->renderer->options->pieChartGleamColor = '#FFFFFF';
-            $this->renderer->options->pieChartGleamBorder = 2;
+        $this->renderer->options->pieChartGleam = .3;
+        $this->renderer->options->pieChartGleamColor = '#FFFFFF';
+        $this->renderer->options->pieChartGleamBorder = 2;
 
-            $this->renderer->options->pieChartShadowSize = 3;
-            $this->renderer->options->pieChartShadowColor = '#000000';
+        $this->renderer->options->pieChartShadowSize = 3;
+        $this->renderer->options->pieChartShadowColor = '#000000';
 
-            $this->renderer->options->legendSymbolGleam = .5;
-            $this->renderer->options->legendSymbolGleamSize = .9;
-            $this->renderer->options->legendSymbolGleamColor = '#FFFFFF';
+        $this->renderer->options->legendSymbolGleam = .5;
+        $this->renderer->options->legendSymbolGleamSize = .9;
+        $this->renderer->options->legendSymbolGleamColor = '#FFFFFF';
 
-            $this->renderer->options->pieChartSymbolColor = '#000000';
+        $this->renderer->options->pieChartSymbolColor = '#000000';
 
 
-            parent::render($w, $h, $f);
-        } catch (Exception $e) {
-            file_put_contents($f, $e->__toString());
-        }
+        parent::render($w, $h, $f);
     }
 }
 

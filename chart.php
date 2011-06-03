@@ -179,7 +179,15 @@ case 'svg':
         echo 'svg/'.rawurlencode($filename);
         $filename = 'svg/'.$filename;
     }
-    $graph->render($width, $height, $filename);
+    try {
+        $graph->render($width, $height, $filename);
+    } catch (Exception $e) {
+        header('HTTP/1.0 500 Internal Server error');
+	header('Content-Type: text/html');
+
+	echo "<pre>".htmlentities($e)."</pre>";
+
+    }
     break;
 default:
     die("Invalid file type");
