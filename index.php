@@ -14,7 +14,7 @@ echo <<<HTML
 <head>
 <script>
 function loadchart(chartname) {
-    var url = 'http://phpmyfaq.de/stats/chart.php?d='+chartname+'&filter='+escape(document.getElementById('filter').value);
+    var url = 'chart.php?d='+chartname+'&filter='+escape(document.getElementById('filter').value);
     chartframe.location.href = url;
 }
 </script>
