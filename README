@@ -1,0 +1,17 @@
+pmstat - Viewer
+===============
+
+This repository contains a simple XUL application which can present some of
+the information collectoed by the pmfstat_collector / pmfstat_server.
+
+Installation in the current form need at least a file auth.php which does
+whatever is needed for user authorization (might be empty if no auth is needed
+or show an HTML form and check the settings, or ...). Database configuration
+has to be done in init.php, currently.
+
+As the XUL interface doesn'z work with the latest version of Firefox a simple
+HTML-based report which is missing some features and layout was added as
+index.php. http://github.com/pmfstat/pmfstat also contains a branch "dojo"
+which is an old attempt to recreate the XUL interface using JavaScript and
+dojo.
+
