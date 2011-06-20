@@ -54,8 +54,11 @@ class TimelineIterator implements Iterator {
     private $step;
     private $position;
 
-    public function __construct(PDO $pdo, $stepcount) {
-        $sql = 'CREATE TEMPORARY TABLE IF NOT EXISTS report_dates (report_date int not null) SELECT UNIX_TIMESTAMP(report_date) AS report_date FROM stat';
+    public function __construct(PDO $pdo, $filter, $stepcount) {
+        if ($stepcount < 10) {
+            $stepcount = 10;
+        }
+        $sql = 'CREATE TEMPORARY TABLE IF NOT EXISTS report_dates (report_date int not null) SELECT UNIX_TIMESTAMP(report_date) AS report_date FROM stat WHERE '.$filter.' GROUP BY report_date';
         $row = $pdo->query($sql);
         $sql = "SELECT report_date FROM report_dates ORDER BY report_date ASC LIMIT 1";
         $row = $pdo->query($sql)->fetch();
@@ -125,7 +128,7 @@ try {
         $graph->xAxis = new ezcGraphChartElementDateAxis();
         $graph->xAxis->dateFormat = "Y/m/d";
 
-        $data = new TimelineIterator($pdo, $_REQUEST['timeline_steps']);
+        $data = new TimelineIterator($pdo, $filter, $_REQUEST['timeline_steps']);
         $graph->data['Machine 1'] = new ezcGraphArrayDataSet($data);
         break;
 
@@ -184,7 +187,15 @@ case 'svg':
         echo 'svg/'.rawurlencode($filename);
         $filename = 'svg/'.$filename;
     }
-    $graph->render($width, $height, $filename);
+    try {
+        $graph->render($width, $height, $filename);
+    } catch (Exception $e) {
+        header('HTTP/1.0 500 Internal Server error');
+	header('Content-Type: text/html');
+
+	echo "<pre>".htmlentities($e)."</pre>";
+
+    }
     break;
 default:
     die("Invalid file type");
